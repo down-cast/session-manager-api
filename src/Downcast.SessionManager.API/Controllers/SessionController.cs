@@ -1,5 +1,3 @@
-using System.Net;
-
 using Downcast.SessionManager.Jwt;
 
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +8,12 @@ namespace Downcast.SessionManager.API.Controllers;
 [Route("api/v1/session")]
 public class SessionController : ControllerBase
 {
-    private readonly ILogger<SessionController> _logger;
     private readonly IJwtManager _jwtManager;
+    private readonly ILogger<SessionController> _logger;
 
     public SessionController(ILogger<SessionController> logger, IJwtManager jwtManager)
     {
-        this._logger     = logger;
+        _logger     = logger;
         _jwtManager = jwtManager;
     }
 
@@ -26,10 +24,9 @@ public class SessionController : ControllerBase
     }
 
     [HttpPost("validate")]
-    [ProducesResponseType((int)HttpStatusCode.OK)]
-    public ActionResult ValidateSession(IDictionary<string, object> claims)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public Task<IDictionary<string, object>> ValidateSession([FromBody] string token)
     {
-        _logger.LogInformation("Received information");
-        return Ok(claims);
+        return _jwtManager.ValidateToken(token);
     }
 }

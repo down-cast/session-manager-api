@@ -1,0 +1,11 @@
+{
+  "ErrorsOptions": {
+    "ErrorCodeDetails": {
+      "InvalidSessionToken": {
+        "Message": "Invalid Jwt",
+        "Detail": "The jwt might be expired or with a wrong format",
+        "StatusCode": "Unauthorized"
+      }
+    }
+  }
+}

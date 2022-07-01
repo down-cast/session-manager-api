@@ -6,7 +6,11 @@ public static class ServicesConfigurationExtensions
 {
     public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
     {
-        builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.OptionsSection));
+        builder.Services.AddOptions<JwtOptions>()
+            .Bind(builder.Configuration.GetSection(JwtOptions.OptionsSection))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
         builder.Services.AddSingleton<IJwtManager, JwtManager>();
         return builder;
     }
