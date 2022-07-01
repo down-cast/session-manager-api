@@ -7,17 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Downcast.Common.Error.Handler" Version="0.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="6.20.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Downcast.Common.Errors\Downcast.Common.Errors.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Model"/>
+        <PackageReference Include="Downcast.Common.Error.Handler" Version="0.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+        <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="6.20.0" />
     </ItemGroup>
 </Project>

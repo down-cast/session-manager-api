@@ -9,29 +9,24 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.ConfigureServices();
 builder.ConfigureSerilog();
 builder.ConfigureErrorHandlerOptions();
 
 WebApplication app = builder.Build();
 
-app.UseSerilogRequestLogging(options =>
-{
-    options.EnrichDiagnosticContext = (context, httpContext) =>
-    {
-        context.Set("client_ip", httpContext.Connection.RemoteIpAddress);
-    };
-});
+app.UseSerilogRequestLogging();
 app.ConfigureErrorHandler();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseForwardedHeaders();
 
 app.MapControllers();
-
-app.UseForwardedHeaders();
 
 
 app.Run();
