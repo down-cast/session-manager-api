@@ -1,0 +1,44 @@
+{
+  "Serilog": {
+    "Using": [
+      "Serilog.Sinks.Console"
+    ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft.AspNetCore": "Warning"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "formatter": {
+            "type": "Serilog.Templates.ExpressionTemplate, Serilog.Expressions",
+            "template": "{ {@t: UtcDateTime(@t), @l: Substring(@l,0,3), @sc:SourceContext, Scope, @mt, @x, ..@p, SourceContext: undefined(), ActionName: undefined(), ActionId: undefined(), RequestId: undefined(), ConnectionId: undefined(), ContentType: undefined(), RequestPath: undefined(), EventId: if SourceContext like 'Microsoft%' then undefined() else EventId, Type: if SourceContext like 'Microsoft%' then undefined() else Type, EndpointName: undefined()} }\n"
+          }
+        }
+      }
+    ],
+    "Filter": [
+      {
+        "Name": "ByExcluding",
+        "Args": {
+          "expression": "RequestPath like '/swagger%'"
+        }
+      },
+      {
+        "Name": "ByExcluding",
+        "Args": {
+          "expression": "RequestPath = '/'"
+        }
+      }
+    ],
+    "Enrich": [
+      "WithExceptionDetails"
+    ],
+    "Destructure": [
+    ]
+  }
+}
+
