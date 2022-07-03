@@ -11,13 +11,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.ConfigureServices();
-builder.ConfigureSerilog();
-builder.ConfigureErrorHandlerOptions();
+builder.AddSerilog();
+builder.AddErrorHandlerOptions();
 
 WebApplication app = builder.Build();
 
 app.UseSerilogRequestLogging();
-app.ConfigureErrorHandler();
+app.UseErrorHandler();
 
 app.UseSwagger();
 app.UseSwaggerUI();

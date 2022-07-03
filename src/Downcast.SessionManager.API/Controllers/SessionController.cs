@@ -24,7 +24,6 @@ public class SessionController : ControllerBase
     }
 
     [HttpPost("validate")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
     public Task<IDictionary<string, object>> ValidateSession([FromBody] string token)
     {
         return _jwtManager.ValidateToken(token);
