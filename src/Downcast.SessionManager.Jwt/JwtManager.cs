@@ -1,8 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Text;
 
-using Downcast.Common.Error.Handler.Enums;
-using Downcast.Common.Error.Handler.Model;
+using Downcast.Common.Errors;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

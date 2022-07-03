@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Downcast.Common.Error.Handler" Version="0.0.1"/>
-        <PackageReference Include="Downcast.Common.Logging" Version="0.0.2" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+        <PackageReference Include="Downcast.Common.Errors.Handler" Version="0.0.6"/>
+        <PackageReference Include="Downcast.Common.Logging" Version="0.0.5"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1"/>
     </ItemGroup>
 
     <ItemGroup>

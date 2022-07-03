@@ -1,4 +1,4 @@
-using Downcast.Common.Error.Handler.Config;
+using Downcast.Common.Errors.Handler.Config;
 using Downcast.Common.Logging;
 using Downcast.SessionManager.API.Config;
 
