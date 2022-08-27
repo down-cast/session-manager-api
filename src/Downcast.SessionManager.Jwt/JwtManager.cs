@@ -2,6 +2,7 @@
 using System.Text;
 
 using Downcast.Common.Errors;
+using Downcast.SessionManager.Jwt.Model;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -21,21 +22,29 @@ public class JwtManager : IJwtManager
         _options = options;
     }
 
-    public string GenerateToken(IDictionary<string, string> claims)
+    public TokenResult GenerateToken(IDictionary<string, string> claims)
     {
         var handler = new JsonWebTokenHandler();
         var claimsList = claims.Select(pair => new Claim(pair.Key, pair.Value)).ToList();
         var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_options.Value.Key));
-        return handler.CreateToken(new SecurityTokenDescriptor
+        DateTime expirationDate = DateTime.UtcNow.Add(_options.Value.Duration);
+        string token = handler.CreateToken(new SecurityTokenDescriptor
         {
-            Expires            = DateTime.UtcNow.Add(_options.Value.Duration),
+            Expires            = expirationDate,
             Subject            = new ClaimsIdentity(claimsList),
             SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature),
             Issuer             = _options.Value.Issuer,
             IssuedAt           = DateTime.UtcNow,
             Audience           = _options.Value.Audience
         });
+
+        return new TokenResult
+        {
+            Token          = token,
+            ExpirationDate = expirationDate
+        };
     }
+
 
     public async Task<IDictionary<string, object>> ValidateToken(string token)
     {

@@ -1,4 +1,5 @@
 using Downcast.SessionManager.Jwt;
+using Downcast.SessionManager.Jwt.Model;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,16 +10,14 @@ namespace Downcast.SessionManager.API.Controllers;
 public class SessionController : ControllerBase
 {
     private readonly IJwtManager _jwtManager;
-    private readonly ILogger<SessionController> _logger;
 
-    public SessionController(ILogger<SessionController> logger, IJwtManager jwtManager)
+    public SessionController(IJwtManager jwtManager)
     {
-        _logger     = logger;
         _jwtManager = jwtManager;
     }
 
     [HttpPost]
-    public string CreateSession(IDictionary<string, string> claims)
+    public TokenResult CreateSession(IDictionary<string, string> claims)
     {
         return _jwtManager.GenerateToken(claims);
     }
