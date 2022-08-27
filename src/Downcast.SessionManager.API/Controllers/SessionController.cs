@@ -23,7 +23,7 @@ public class SessionController : ControllerBase
     }
 
     [HttpPost("validate")]
-    public Task<IDictionary<string, object>> ValidateSession([FromBody] string token)
+    public Task ValidateSession([FromBody] string token)
     {
         return _jwtManager.ValidateToken(token);
     }

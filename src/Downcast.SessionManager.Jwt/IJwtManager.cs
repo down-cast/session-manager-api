@@ -5,5 +5,5 @@ namespace Downcast.SessionManager.Jwt;
 public interface IJwtManager
 {
     TokenResult GenerateToken(IDictionary<string, object> claims);
-    Task<IDictionary<string, object>> ValidateToken(string token);
+    Task ValidateToken(string token);
 }

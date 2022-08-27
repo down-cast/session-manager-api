@@ -48,11 +48,11 @@ public class JwtManager : IJwtManager
     }
 
 
-    public async Task<IDictionary<string, object>> ValidateToken(string token)
+    public async Task ValidateToken(string token)
     {
         try
         {
-            TokenValidationResult? validationResponse = await _handler.ValidateTokenAsync(
+            TokenValidationResult validationResponse = await _handler.ValidateTokenAsync(
                 token,
                 new TokenValidationParameters
                 {
@@ -66,9 +66,9 @@ public class JwtManager : IJwtManager
                     ValidIssuer              = _options.Value.Issuer
                 }).ConfigureAwait(false);
 
-            if (validationResponse.IsValid)
+            if (!validationResponse.IsValid)
             {
-                return validationResponse.Claims;
+                throw new DcException(ErrorCodes.InvalidSessionToken);
             }
         }
         catch (Exception e)
