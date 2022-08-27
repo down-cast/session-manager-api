@@ -17,7 +17,7 @@ public class SessionController : ControllerBase
     }
 
     [HttpPost]
-    public TokenResult CreateSession(IDictionary<string, string> claims)
+    public TokenResult CreateSession(IDictionary<string, object> claims)
     {
         return _jwtManager.GenerateToken(claims);
     }
