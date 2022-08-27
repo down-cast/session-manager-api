@@ -28,10 +28,12 @@ public class JwtManager : IJwtManager
     {
         var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_options.Value.Key));
         DateTime expirationDate = DateTime.UtcNow.Add(_options.Value.Duration);
+
+        IEnumerable<Claim> claimList = GetClaims(claims);
         string token = _handler.CreateToken(new SecurityTokenDescriptor
         {
             Expires            = expirationDate,
-            Subject            = new ClaimsIdentity(GetClaimsIdentity(claims)),
+            Subject            = new ClaimsIdentity(claimList),
             SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature),
             Issuer             = _options.Value.Issuer,
             IssuedAt           = DateTime.UtcNow,
@@ -50,9 +52,9 @@ public class JwtManager : IJwtManager
     {
         try
         {
-            JsonWebTokenHandler handler = new();
-            TokenValidationResult? validationResponse = await handler.ValidateTokenAsync(
-                token, new TokenValidationParameters
+            TokenValidationResult? validationResponse = await _handler.ValidateTokenAsync(
+                token,
+                new TokenValidationParameters
                 {
                     ValidateIssuer           = true,
                     ValidateIssuerSigningKey = true,
@@ -77,65 +79,10 @@ public class JwtManager : IJwtManager
         throw new DcException(ErrorCodes.InvalidSessionToken);
     }
 
-    public ClaimsIdentity GetClaimsIdentity(IDictionary<string, object> claims)
-    {
-        return new ClaimsIdentity(claims.SelectMany(pair => GetClaims(pair.Key, pair.Value)));
-    }
-
-
     private IEnumerable<Claim> GetClaims(IDictionary<string, object> claims)
     {
-        var claimList = new List<Claim>();
-        foreach ((string? claimName, object? value) in claims)
-        {
-            claimList.AddRange(GetClaims(claimName, value));
-        }
-
-        return claimList;
-    }
-
-
-    private IEnumerable<Claim> GetClaims(string claimName, object value)
-    {
-        var jsonElement = (JsonElement)value;
-        object? realValue = GetValueFromJsonElement(jsonElement);
-        return realValue switch
-        {
-            null => Enumerable.Empty<Claim>(),
-            IEnumerable<object> enumerable => enumerable.SelectMany(val => GetClaims(claimName, val)),
-            _ => new[] { new Claim(claimName, realValue.ToString() ?? "", GetClaimValueType(realValue)) }
-        };
-    }
-
-
-    private static object? GetValueFromJsonElement(JsonElement element)
-    {
-        switch (element.ValueKind)
-        {
-            case JsonValueKind.Array:
-                return element.Deserialize<IEnumerable<object>>();
-            case JsonValueKind.String:
-                return element.Deserialize<string>();
-            case JsonValueKind.Number:
-                return element.Deserialize<double>();
-            case JsonValueKind.True or JsonValueKind.False:
-                return element.Deserialize<bool>();
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-
-    private static string GetClaimValueType(object value)
-    {
-        return value switch
-        {
-            bool => ClaimValueTypes.Boolean,
-            int => ClaimValueTypes.Integer,
-            long => ClaimValueTypes.Integer64,
-            double or float => ClaimValueTypes.Double,
-            string => ClaimValueTypes.String,
-            DateTime => ClaimValueTypes.Date,
-            _ => throw new DcException(ErrorCodes.BadRequest, $"Unsupported claim value type: {value.GetType()}")
-        };
+        string? tempToken = _handler.CreateToken(JsonSerializer.Serialize(claims));
+        JsonWebToken? readToken = _handler.ReadJsonWebToken(tempToken);
+        return readToken.Claims;
     }
 }
