@@ -74,9 +74,8 @@ public class JwtManager : IJwtManager
         catch (Exception e)
         {
             _logger.LogError(e, "Jwt validation failed");
+            throw new DcException(ErrorCodes.InvalidSessionToken);
         }
-
-        throw new DcException(ErrorCodes.InvalidSessionToken);
     }
 
     private IEnumerable<Claim> GetClaims(IDictionary<string, object> claims)
