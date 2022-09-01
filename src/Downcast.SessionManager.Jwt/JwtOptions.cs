@@ -5,6 +5,8 @@ namespace Downcast.SessionManager.Jwt;
 public class JwtOptions : IValidatableObject
 {
     public const string OptionsSection = "JwtOptions";
+
+    [Required]
     public TimeSpan Duration { get; init; }
 
     [Required(ErrorMessage = "The key is required so the jwt can be securely signed")]
@@ -14,7 +16,7 @@ public class JwtOptions : IValidatableObject
     public string Issuer { get; init; } = null!;
 
     [Required]
-    public string Audience { get; set; } = null!;
+    public string Audience { get; init; } = null!;
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
