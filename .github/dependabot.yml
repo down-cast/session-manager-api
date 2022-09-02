@@ -4,6 +4,15 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
+
+registries:
+  nuget-example:
+    type: nuget-feed
+    url: https://nuget.pkg.github.com/down-cast/index.json
+    username: mihail-brinza
+    password: ${{secrets.GITHUB_TOKEN}}
+
+
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directory: "/" # Location of package manifests

@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 		README.md = README.md
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
-		.github\workflows\build_and_test.yml = .github\workflows\build_and_test.yml
+		.github\dependabot.yml = .github\dependabot.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Downcast.SessionManager.Jwt", "src\Downcast.SessionManager.Jwt\Downcast.SessionManager.Jwt.csproj", "{F9ABE813-82D0-442F-A5DD-38055CD28492}"
@@ -19,6 +19,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Downcast.SessionManager.Tests.Utils", "test\Downcast.SessionManager.Tests.Utils\Downcast.SessionManager.Tests.Utils.csproj", "{8DDB0370-704F-44FA-B142-A48D86919E8B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Downcast.SessionManager.Jwt.Tests", "test\Downcast.SessionManager.Jwt.Tests\Downcast.SessionManager.Jwt.Tests.csproj", "{1CF4AF30-0BE5-4478-99F0-5518C4096EB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{F47DD887-D7BC-4C69-8255-5ABD2E5370B2}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build_and_test.yml = .github\workflows\build_and_test.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,5 +53,6 @@ Global
 		{F9ABE813-82D0-442F-A5DD-38055CD28492} = {329E7436-AE3D-423D-AE42-AD986CD62D87}
 		{8DDB0370-704F-44FA-B142-A48D86919E8B} = {0018D701-DBA5-4C74-B562-F36942B87BD6}
 		{1CF4AF30-0BE5-4478-99F0-5518C4096EB1} = {0018D701-DBA5-4C74-B562-F36942B87BD6}
+		{F47DD887-D7BC-4C69-8255-5ABD2E5370B2} = {4908532E-C4A9-4AE7-B9F2-3868C7718666}
 	EndGlobalSection
 EndGlobal
