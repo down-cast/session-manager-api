@@ -6,7 +6,7 @@
 version: 2
 
 registries:
-  nuget-example:
+  downcast-nuget:
     type: nuget-feed
     url: https://nuget.pkg.github.com/down-cast/index.json
     username: mihail-brinza
@@ -16,6 +16,8 @@ registries:
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directory: "/" # Location of package manifests
+    registries:
+      - downcast-nuget
     schedule:
       interval: "daily"
     assignees:
