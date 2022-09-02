@@ -10,7 +10,7 @@ registries:
     type: nuget-feed
     url: https://nuget.pkg.github.com/down-cast/index.json
     username: mihail-brinza
-    password: ${{secrets.GITHUB_TOKEN}}
+    password: ${{secrets.DOWNCAST_NUGET_TOKEN}}
 
 
 updates:
